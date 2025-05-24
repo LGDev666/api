@@ -1,0 +1,19 @@
+services:
+  catnip-database:
+    image: postgres
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - ${POSTGRES_PORT:-5432}:${POSTGRES_PORT:-5432}
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: ${POSTGRES_DATA:-/data/postgres}
+    environment:
+      - POSTGRES_USER=catnip-api
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=catnip
+
+volumes:
+  postgres_data:
